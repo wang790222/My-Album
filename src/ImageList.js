@@ -31,7 +31,7 @@ function setImgName() {
   for (let n of imgAountInSubDir) {
     let temp = [];
     for (let i = 1; i <= n[1]; i++) {
-      let imgName = `./img/${n[0]}/${n[0]}_${i}.jpg`;
+      let imgName = `./My-Album/img/${n[0]}/${n[0]}_${i}.jpg`;
       temp.push(imgName);
     }
 
