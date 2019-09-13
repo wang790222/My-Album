@@ -5,9 +5,9 @@ import ImageCard from './ImageCard';
 let images = [];
 let imgAountInSubDir = [
   ["asia", 31],           // Asia
-  ["west_europe", 16],    // West Europe
+  ["west_europe", 18],    // West Europe
   ["central_europe", 23], // Central Europe
-  ["south_europe", 22],   // South Europe
+  ["south_europe", 20],   // South Europe
   ["north_europe", 18],   // North Europe
   ["north_america", 11],  // North America
 ];
@@ -17,7 +17,7 @@ const ImageList = (props) => {
   setImgName();
 
   const showImages = images[props.tagIndex].map((image, index) => {
-    return <ImageCard key={index} img={image} />
+    return <ImageCard key={index} img={image} handlePopup={props.handlePopup} />
   });
 
   return (

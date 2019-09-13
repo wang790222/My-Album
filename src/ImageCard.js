@@ -14,10 +14,14 @@ class ImageCard extends React.Component {
   }
 
   setSpans = () => {
-    
     const height = this.imgRef.current.clientHeight;
     const spans = Math.ceil(height / 5);
     this.setState({ spans });
+  };
+
+  handleOnClick = () => {
+    let setPopup = true;
+    this.props.handlePopup(setPopup, this.props.img);
   };
 
   render() {
@@ -27,6 +31,7 @@ class ImageCard extends React.Component {
           alt={this.props.img}
           src={this.props.img}
           ref={this.imgRef}
+          onClick={this.handleOnClick}
         />
       </div>
     );
