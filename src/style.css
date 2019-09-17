@@ -71,7 +71,6 @@ body {
   left:0; 
   right:0; 
   margin:auto;
-  background-color: blue;
   z-index: 2;
 }
 
@@ -82,6 +81,14 @@ body {
   height: 90vh;
   background-color: #111;
   float: left;
+}
+
+.popup__left:hover .popup__left-arrow-left {
+  z-index: 10;
+}
+
+.popup__left:hover .popup__left-arrow-right {
+  z-index: 10;
 }
 
 .popup__right {
@@ -100,6 +107,35 @@ body {
 }
 
 ion-icon {
-  font-size: 25px;
+  font-size: 36px;
+  color: grey;
+}
+
+ion-icon pin {
+  cursor: pointer;
+  
+}
+
+ion-icon .arrow {
+  color: grey;
+}
+
+.popup__left-arrow-left {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  display: inline;
+  float: left;
+  z-index: -10;
+  cursor: pointer;
+}
+
+.popup__left-arrow-right {
+  position: absolute;
+  top: 45%;
+  left: 70%;
+  display: inline;
+  float: right;
+  z-index: -10;
   cursor: pointer;
 }

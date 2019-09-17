@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
+import pathToFileName from './utilities';
 
 const Popup = (props) => {
 
   const frameRef = useRef(null);
   const imgRef = useRef(null);
+  const popupContentRef = useRef(null);
 
   const [offsetTop, setOffsetTop] = useState(0);
   const [offsetLeft, setOffsetLeft] = useState(0);
@@ -13,13 +15,36 @@ const Popup = (props) => {
     if (imgRef.current.clientHeight > imgRef.current.clientWidth) {
       let width = imgRef.current.clientWidth;
       let fWidth = frameRef.current.clientWidth;
+      
       setOffsetLeft((fWidth - width) / 2);
+      setOffsetTop(0);
     } else {
       let height = imgRef.current.clientHeight;
       let fHeight = frameRef.current.clientHeight;
       setOffsetTop((fHeight - height) / 2);
+      setOffsetLeft(0);
     }
-  });
+  }, [offsetTop, offsetLeft]);
+
+  const onClickImgFunction = (e) => {
+    
+    let ol = popupContentRef.current.offsetLeft;
+    let rightBorder = imgRef.current.clientWidth + ol;
+    let relativePosition = (e.nativeEvent.clientX - ol) / (rightBorder - ol);
+    if (relativePosition < .2) {
+      props.nextOrLastPic(false, props.currentImg);
+    } else {
+      props.nextOrLastPic(true, props.currentImg);
+    }
+  };
+
+  const handleLast = () => {
+    props.nextOrLastPic(false, props.currentImg);
+  }
+  
+  const handleNext = () => {
+    props.nextOrLastPic(true, props.currentImg);
+  }
 
   const escFunction = () => {
     handleOnClick();
@@ -38,6 +63,7 @@ const Popup = (props) => {
     position: "relative",
     top: offsetTop,
     left: offsetLeft,
+    cursor: "pointer",
   };
 
   return (
@@ -49,20 +75,37 @@ const Popup = (props) => {
         &times;
       </div>
       <div className="vertical-align">
-        <div className="popup__content">
-          <div className="popup__left" ref={frameRef}>
+        <div className="popup__content" ref={popupContentRef}>
+          <div 
+            className="popup__left" 
+            ref={frameRef}
+            onClick={onClickImgFunction}
+          >
             <img 
               src={props.currentImg} 
               alt={props.currentImg}
               ref={imgRef}
               style={imgStyle}
             />
+            <div className="popup__left-arrow-left">
+              <ion-icon 
+                name="arrow-dropleft" 
+                className="arrow"
+                onClick={handleLast}
+              ></ion-icon>
+            </div>
+            <div className="popup__left-arrow-right">
+              <ion-icon 
+                name="arrow-dropright" 
+                className="arrow"
+                onClick={handleNext}
+              ></ion-icon>
+            </div>
           </div>
           <div className="popup__right">
             <div className="popup__right-text">
               <span>{getImgDescription(props.currentImg)}</span>
-
-              <span><a href={getLocation(props.currentImg)} target="_blank"><ion-icon name="pin"></ion-icon></a></span>
+              <span><a href={getLocation(props.currentImg)} target="_blank"><ion-icon name="pin"  className="pin"></ion-icon></a></span>
             </div>
           </div>
         </div>
@@ -70,14 +113,6 @@ const Popup = (props) => {
     </div>
   )
 };
-
-const pathToFileName = (imgPath) => {
-  let imgName = imgPath.split("/");
-  imgName = imgName[imgName.length - 1];
-  imgName = imgName.split(".");
-
-  return imgName[0];
-}
 
 const getImgDescription = (imgPath) => {
 

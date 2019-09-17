@@ -14,9 +14,11 @@ class ImageCard extends React.Component {
   }
 
   setSpans = () => {
-    const height = this.imgRef.current.clientHeight;
-    const spans = Math.ceil(height / 5);
-    this.setState({ spans });
+    if (this.imgRef.current) {
+      const height = this.imgRef.current.clientHeight;
+      const spans = Math.ceil(height / 5);
+      this.setState({ spans });
+    }
   };
 
   handleOnClick = () => {
@@ -32,6 +34,7 @@ class ImageCard extends React.Component {
           src={this.props.img}
           ref={this.imgRef}
           onClick={this.handleOnClick}
+          key={Math.floor(Math.random() * 1000000)}
         />
       </div>
     );
